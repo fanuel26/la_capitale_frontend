@@ -1,0 +1,35 @@
+# version: '3.5'
+
+# services:
+
+#   angular-service:
+#     container_name: esmc_front
+#     build: ./dev
+#     volumes:
+#       - './esmc_front:/usr/src/app'
+#     ports:
+#       - '4200:4200'
+
+version: "3"
+
+services:
+    # esmcgie-web:
+    web_app:
+      #container_name: esmcgie-web
+      container_name: web_app
+      #hostname: dp-senyo
+      # image: esmc-web:v1
+      image: perce26/entrersortie:front
+      #command: tail -F anyt
+      ports:
+       #- "3000:3000"
+       - "4500:80"
+      #environment:
+       #- API_BASE_URL=http://160.242.199.14:8888
+      networks:
+        - my-srv-net
+
+networks:
+  my-srv-net:
+    # external:
+        name: my-ng-net

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'la_capitale_frontend';
+  title = 'gestion_entrer_sortie_front';
 }

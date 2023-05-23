@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'la_capitale_frontend'`, () => {
+  it(`should have as title 'gestion_entrer_sortie_front'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('la_capitale_frontend');
+    expect(app.title).toEqual('gestion_entrer_sortie_front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('la_capitale_frontend app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('gestion_entrer_sortie_front app is running!');
   });
 });

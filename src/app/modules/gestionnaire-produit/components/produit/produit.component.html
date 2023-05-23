@@ -1,0 +1,144 @@
+<div class="card card-body p-4 bg-white border-0">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h6>Liste de vos produits</h6>
+    <button
+      class="btn btn-primary btn-lg"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+    >
+      Enregistrer un produit
+    </button>
+  </div>
+  <div class="my-4">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Date de vente</th>
+          <th>Nom du produit</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dataProduit">
+          <td>{{ item.created_at | date : "EEEE, MMMM d, y, h:mm:ss a" }}</td>
+          <td>{{ item.libelle }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="getDetail(item.id)">
+              Detail
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Enregistrer un produit
+            </h5>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="produitForm" (ngSubmit)="onSubmit()">
+        <div class="modal-body bg-banner">
+          <div class="container">
+            <div class="row">
+              <div class="card card-body p-4 bg-white border-0 mb-4">
+                <div class="form-group my-3">
+                  <label for="">Nom du Produit</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-lg input1"
+                    placeholder="Nom du produit"
+                    formControlName="libelle"
+                    [ngClass]="
+                      produitForm.get('libelle')?.invalid &&
+                      produitForm.get('libelle')?.touched
+                        ? 'form-control is-invalid'
+                        : 'form-control'
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Fermer
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Enregistrer le produit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="detail"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="detail"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Détail du produit
+            </h5>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body bg-banner">
+        <div *ngIf="idProduit">
+          <app-detail-produit [id]="idProduit"></app-detail-produit>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
