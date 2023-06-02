@@ -7,8 +7,8 @@ import { LayoutsModule } from 'src/app/layouts/layouts.module';
 import { GestionnaireProduitComponent } from './gestionnaire-produit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -23,7 +23,7 @@ import { DetailProduitComponent } from './components/detail-produit/detail-produ
     LayoutsModule,
     ReactiveFormsModule,
     SharedModule,
-    NgxDatatableModule
+    DataTablesModule
   ]
 })
 export class GestionnaireProduitModule { }

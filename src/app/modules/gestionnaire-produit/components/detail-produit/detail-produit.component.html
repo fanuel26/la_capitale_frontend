@@ -9,20 +9,20 @@
           <div class="col-md-6">
             <div class="card p-2">
               <p>Prix de vente</p>
-              <h4 class="text-primary fw-bold">
+              <h4 class="text-primar fw-bold">
                 {{
                   prixVente == null
                     ? "Pas Definis"
                     : prixVente.prix_vente_unique + ' Fcfa'
                 }}
-                
+
               </h4>
             </div>
           </div>
           <div class="col-md-6">
             <div class="card p-2">
               <p>Nombre en stock</p>
-              <h4 class="text-primary fw-bold">{{ nbrStock }}</h4>
+              <h4 class="text-primar fw-bold">{{ nbrStock }}</h4>
             </div>
           </div>
         </div>
@@ -114,19 +114,19 @@
           <div class="col-md-6">
             <div class="card p-2">
               <p>Nombre total produit</p>
-              <h4 class="text-primary fw-bold">{{ stateProduit?.nbrQte }}</h4>
+              <h4 class="text-primar fw-bold">{{ stateProduit?.nbrQte }}</h4>
             </div>
           </div>
           <div class="col-md-6">
             <div class="card p-2">
               <p>Nombre de vente de vente</p>
-              <h4 class="text-primary fw-bold">
+              <h4 class="text-primar fw-bold">
                 {{ stateProduit?.nbrQteVente ?? 0 }}
               </h4>
             </div>
           </div>
         </div>
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
           <thead>
             <tr>
               <th>Date d'ajout</th>

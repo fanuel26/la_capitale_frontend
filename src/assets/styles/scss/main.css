@@ -57,18 +57,22 @@ body {
 .input {
   font-size: 12px;
   text-align: center;
+  box-shadow: none !important;
+  border-color: #f3f2f0 !important;
 }
 .input:focus {
-  box-shadow: none;
-  border-color: #bd1522;
+  box-shadow: none !important;
+  border-color: #bd1522 !important;
 }
 
 .input1 {
   font-size: 12px !important;
+  box-shadow: none !important;
+  border-color: #f3f2f0 !important;
 }
 .input1:focus {
-  box-shadow: none;
-  border-color: #bd1522;
+  box-shadow: none !important;
+  border-color: #bd1522 !important;
 }
 
 .overflow {
@@ -76,8 +80,9 @@ body {
   height: 40vh;
   padding-top: 10px;
   padding-bottom: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
+  align-items: start;
 }
 
 .btn {
@@ -91,7 +96,7 @@ body {
 }
 .btn.btn-primary {
   background-color: #bd1522 !important;
-  border-color: #bd1522;
+  border-color: #bd1522 !important;
   border-radius: 0px;
   color: #fff !important;
   font-weight: 600;
@@ -104,7 +109,7 @@ body {
 }
 .btn.btn-light {
   background-color: #fff;
-  border-color: #fff;
+  border-color: #fff !important;
   border-radius: 0px;
   color: #bd1522 !important;
   font-weight: 600;
@@ -183,7 +188,7 @@ body {
   text-align: justify;
 }
 
-.text-primary {
+.text-primar {
   color: #bd1522 !important;
 }
 

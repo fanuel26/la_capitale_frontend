@@ -46,7 +46,7 @@ export class ProduitComponent implements OnInit {
       if (value.status == true) {
         this.sweetAlert.showSuccessAlert('Enregistrement effectuée!', 'Produit enregistrer avec success')
         this.produitForm.reset()
-        $('#staticBackdrop').modal('hide')
+        // $('#staticBackdrop').modal('hide')
         this.getListProduit()
       }
     })

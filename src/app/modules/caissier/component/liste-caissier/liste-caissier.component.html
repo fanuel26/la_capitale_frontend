@@ -1,0 +1,245 @@
+<div class="card card-body p-4 bg-white border-0">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h6>Liste de vos ventes</h6>
+    <button
+      class="btn btn-primary btn-lg"
+      (click)="launchModalVente()"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+    >
+      Effectuer une vente
+    </button>
+  </div>
+  <div class="my-4">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr>
+          <th>Date de vente</th>
+          <th>Prix Total (Fcfa)</th>
+          <th>Montant client (Fcfa)</th>
+          <th>Monaies (Fcfa)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dataVente">
+          <td>{{ item.created_at }}</td>
+          <td>{{ item.prix_total }}</td>
+          <td>{{ item.prix_client }}</td>
+          <td>{{ item.monais_client }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm">Detail</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Effectuer une vente
+            </h5>
+          </div>
+          <div>
+            <input
+              type="text"
+              (input)="launchSearch($event)"
+              class="form-control form-control-lg input"
+              style="width: 45vw"
+              id="recherche"
+              placeholder="Rechercher le produit"
+              autofocus
+            />
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body bg-banner">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card card-body p-4 bg-white border-0 mb-4">
+                <div class="text-center">
+                  <button class="btn btn-primary btn-block btn-lg w-100">
+                    Scanner le produit
+                  </button>
+                  <!-- <div class="my-2">
+                    <small>ou</small>
+                  </div>
+                  <form action="">
+                    <input
+                      type="text" (input)="launchSearch($event)"
+                      class="form-control form-control-lg input"
+                      placeholder="Rechercher le produit"
+                      autofocus
+                    />
+                  </form> -->
+                </div>
+              </div>
+              <div class="card card-body p-4 bg-white border-0 my-4">
+                <h6 class="mb-4">Resultat de recherche produit</h6>
+                <div class="row overflow">
+                  <div class="col-md-12" *ngFor="let item of dataProduit">
+                    <div
+                      class="card card-body brd border-bottom border-0 mb-2"
+                      *ngIf="item.prixVente"
+                      (click)="AddToSell(item)"
+                    >
+                      <h6>{{ item.libelle }}</h6>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <h5 class="text-primar">{{ item.prixVente }} Fcfa</h5>
+                        <h6>
+                          <small>{{ item.nbrStock }} Restant</small>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-body p-4 bg-white border-0">
+                <form
+
+                ></form>
+                <div class="mb-2">
+                  <div class="card border-0">
+                    <div class="card-body">
+                      <h6>{{ produitSelect?.libelle }}</h6>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <h5 class="text-primar">
+                          {{ produitSelect?.prixVente }} Fcfa
+                        </h5>
+                        <h6>
+                          <input
+                            type="number"
+                            id="qte"
+                            style="width: 100px"
+                            placeholder="Quantité"
+                            class="form-control input"
+                            (input)="setQte($event)"
+                          />
+                        </h6>
+                      </div>
+                    </div>
+                    <div
+                      class="card-footer bg-white d-flex justify-content-between align-items-center"
+                    >
+                      <button type="button" class="btn btn-light">Annuler</button>
+                      <button type="submit" (click)="onSubmitAddProduit()" [disabled]="qte == null" class="btn btn-primary">Ajouter</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card card-body p-4 bg-white border-0 my-4">
+                <h6 class="mb-4">Liste des produits ajouter a la vente</h6>
+                <div class="row overflow">
+                  <div class="col-md-12" *ngFor="let item of dataAddVente">
+                    <div class="card card-body border-0 brd border-bottom mb-2">
+                      <div
+                        class="d-flex justify-content-between align-items-end mb-3"
+                      >
+                        <h6 class="fw-bold">-- {{ item.libelle }} --</h6>
+                        <button class="btn btn-xs btn-primary" (click)="deleteAddVente(item.id)">Retirer</button>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <!-- <div>
+                          <small>Prix Unitaire</small>
+                          <h6 class="text-dark">2.200 Fcfa</h6>
+                        </div> -->
+                        <div>
+                          <small>Qté</small>
+                          <h6 class="text-dark">{{ item.qte }}</h6>
+                        </div>
+                        <div>
+                          <small>Prix Total</small>
+                          <h6 class="text-primar fw-bold">{{ item.prix_total }} Fcfa</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-body p-4 bg-white border-0 mb-4">
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>Prix HT</h6>
+                  <h4 class="fw-bold">{{ prixTotal }} Fcfa</h4>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>TVA</h6>
+                  <h4 class="fw-bold">0%</h4>
+                </div>
+                <hr />
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>Prix TTC</h6>
+                  <h4 class="fw-bold text-primar">{{ prixTotal }} Fcfa</h4>
+                </div>
+              </div>
+              <div class="card card-body p-4 bg-white border-0 my-4">
+                <h6>Saisir la somme apporter (Fcfa)</h6>
+                <form action="" class="my-3">
+                  <input
+                    type="number" (input)="addPrixAmener($event)"
+                    class="form-control input form-control-lg"
+                    placeholder="Somme apporter" id="sommeApporter"
+                  />
+                </form>
+              </div>
+              <div class="card card-body p-4 bg-white border-0 my-4">
+                <h6>Monaie a remettre au client (Fcfa)</h6>
+                <h3 class="text-right text-primar fw-bold mt-4">{{ prixRemettre }} Fcfa</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+        <button type="button" class="btn btn-primary" ngxPrint [printSectionId]="'printDiv'">Lancer la vente</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="printDiv" style="width: 80mm; height: 80mm;">
+    <h1>coucou</h1>
+</div>

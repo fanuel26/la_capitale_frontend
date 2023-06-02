@@ -1,17 +1,31 @@
+import { NgxPrintModule } from 'ngx-print';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CaissierRoutingModule } from './caissier-routing.module';
 import { CaissierComponent } from './caissier.component';
+import { ListeCaissierComponent } from './component/liste-caissier/liste-caissier.component';
+import { LayoutsModule } from 'src/app/layouts/layouts.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DataTablesModule } from 'angular-datatables';
+import { EtatComponent } from './component/etat/etat.component';
 
 
 @NgModule({
   declarations: [
-    CaissierComponent
+    CaissierComponent,
+    ListeCaissierComponent,
+    EtatComponent
   ],
   imports: [
     CommonModule,
-    CaissierRoutingModule
+    CaissierRoutingModule,
+    LayoutsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    DataTablesModule,
+    NgxPrintModule
   ]
 })
 export class CaissierModule { }
