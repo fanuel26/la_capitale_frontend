@@ -2,6 +2,9 @@ import { SweetAlertService } from 'src/app/shared/common/sweet-alert.service';
 import { ProduitService } from './../../../gestionnaire-produit/common/produit.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VenteService } from '../../common/vente.service';
+import * as printJS from 'print-js';
+import { style } from '@angular/animations';
+import { formatDate } from '@angular/common';
 
 declare var $: any;
 
@@ -21,13 +24,20 @@ export class ListeCaissierComponent implements OnInit {
   prixTotal!: number;
   prixAmener!: number;
   prixRemettre: number = 0;
+  formattedDate: any;
+
   constructor(
     private produitService: ProduitService,
     private sweetAlertService: SweetAlertService,
-    private venteService: VenteService,
+    private venteService: VenteService
   ) {}
 
   ngOnInit(): void {
+    const date = new Date(); // Replace with your actual date
+    const locale = 'fr-FR'; // Set the locale to French
+
+    this.formattedDate = date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+
     this.user = JSON.parse(localStorage.getItem('infoUser')!);
     this.listeProduit();
     this.listeVente(this.user.id);
@@ -189,25 +199,33 @@ export class ListeCaissierComponent implements OnInit {
   }
 
   printDataRecu() {
-    const printStyle = `
+    const printCSS = `
       @page {
         size: 80mm 80mm;
-        margin: 0;
+        margin: 0 !important;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10px
       }
-
       @media print {
-        body {
-          margin: 0;
-          font-size: 12px;
+        #printDiv {
+          width: 80mm;
+          height: 80mm;
+          font-family: 'Times New Roman', Times, serif;
+          font-size: 10px
         }
       }
     `;
 
-    // this.printService.printDiv('printDiv', printStyle)
+    printJS({
+      printable: 'printDiv', // Corrected id to match the div id
+      type: 'html',
+      targetStyles: ['*'],
+      style: printCSS
+    });
   }
 
   saveVente() {
-    // this.printDataRecu();
+    this.printDataRecu();
     // if (this.prixAmener >= this.prixTotal) {
     //   let body = {
     //     id_user: this.user.id,

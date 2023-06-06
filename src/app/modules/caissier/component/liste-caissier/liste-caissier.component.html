@@ -123,9 +123,7 @@
             </div>
             <div class="col-md-4">
               <div class="card card-body p-4 bg-white border-0">
-                <form
-
-                ></form>
+                <form></form>
                 <div class="mb-2">
                   <div class="card border-0">
                     <div class="card-body">
@@ -151,8 +149,17 @@
                     <div
                       class="card-footer bg-white d-flex justify-content-between align-items-center"
                     >
-                      <button type="button" class="btn btn-light">Annuler</button>
-                      <button type="submit" (click)="onSubmitAddProduit()" [disabled]="qte == null" class="btn btn-primary">Ajouter</button>
+                      <button type="button" class="btn btn-light">
+                        Annuler
+                      </button>
+                      <button
+                        type="submit"
+                        (click)="onSubmitAddProduit()"
+                        [disabled]="qte == null"
+                        class="btn btn-primary"
+                      >
+                        Ajouter
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -167,7 +174,12 @@
                         class="d-flex justify-content-between align-items-end mb-3"
                       >
                         <h6 class="fw-bold">-- {{ item.libelle }} --</h6>
-                        <button class="btn btn-xs btn-primary" (click)="deleteAddVente(item.id)">Retirer</button>
+                        <button
+                          class="btn btn-xs btn-primary"
+                          (click)="deleteAddVente(item.id)"
+                        >
+                          Retirer
+                        </button>
                       </div>
                       <div
                         class="d-flex justify-content-between align-items-center"
@@ -182,7 +194,9 @@
                         </div>
                         <div>
                           <small>Prix Total</small>
-                          <h6 class="text-primar fw-bold">{{ item.prix_total }} Fcfa</h6>
+                          <h6 class="text-primar fw-bold">
+                            {{ item.prix_total }} Fcfa
+                          </h6>
                         </div>
                       </div>
                     </div>
@@ -216,15 +230,19 @@
                 <h6>Saisir la somme apporter (Fcfa)</h6>
                 <form action="" class="my-3">
                   <input
-                    type="number" (input)="addPrixAmener($event)"
+                    type="number"
+                    (input)="addPrixAmener($event)"
                     class="form-control input form-control-lg"
-                    placeholder="Somme apporter" id="sommeApporter"
+                    placeholder="Somme apporter"
+                    id="sommeApporter"
                   />
                 </form>
               </div>
               <div class="card card-body p-4 bg-white border-0 my-4">
                 <h6>Monaie a remettre au client (Fcfa)</h6>
-                <h3 class="text-right text-primar fw-bold mt-4">{{ prixRemettre }} Fcfa</h3>
+                <h3 class="text-right text-primar fw-bold mt-4">
+                  {{ prixRemettre }} Fcfa
+                </h3>
               </div>
             </div>
           </div>
@@ -234,12 +252,185 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Fermer
         </button>
-        <button type="button" class="btn btn-primary" ngxPrint [printSectionId]="'printDiv'">Lancer la vente</button>
+        <button type="button" class="btn btn-primary" (click)="saveVente()">
+          Lancer la vente
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-<div id="printDiv" style="width: 80mm; height: 80mm;">
-    <h1>coucou</h1>
+<div
+  id="printDiv"
+  class="print-content"
+  style="
+    width: 80mm;
+    top: 0;
+    left: 0;
+    font-size: 10px !important;
+    position: relative;
+  "
+>
+  <div style="position: absolute; width: 100%; padding-right: 30px !important">
+    <img src="./assets/images/logo1.png" style="width: 100%" alt="" />
+    <div>
+      <h6><strong>{{ formattedDate }}</strong></h6>
+      <h6><strong>Caisse 1</strong></h6>
+    </div>
+    <h5>
+      <strong>-------------------------------------------------</strong>
+    </h5>
+    <div>
+      <h6 style="margin-top: 10px">
+        <strong>Lorem ipsum dolor sit amet.</strong>
+      </h6>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <small>Quantité</small> <br />
+          <strong>50</strong>
+        </div>
+        <div style="width: 60%; text-align: right">
+          <small>Prix Total</small> <br />
+          <strong>50.000 Fcfa</strong>
+        </div>
+      </div>
+      <h5>
+        <strong
+          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
+        >
+      </h5>
+    </div>
+    <div>
+      <h6 style="margin-top: 10px">
+        <strong>Lorem ipsum dolor sit amet.</strong>
+      </h6>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <small>Quantité</small> <br />
+          <strong>50</strong>
+        </div>
+        <div style="width: 60%; text-align: right">
+          <small>Prix Total</small> <br />
+          <strong>50.000 Fcfa</strong>
+        </div>
+      </div>
+      <h5>
+        <strong
+          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
+        >
+      </h5>
+    </div>
+    <div>
+      <h6 style="margin-top: 10px">
+        <strong>Lorem ipsum dolor sit amet.</strong>
+      </h6>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <small>Quantité</small> <br />
+          <strong>50</strong>
+        </div>
+        <div style="width: 60%; text-align: right">
+          <small>Prix Total</small> <br />
+          <strong>50.000 Fcfa</strong>
+        </div>
+      </div>
+      <h5>
+        <strong
+          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
+        >
+      </h5>
+    </div>
+    <div>
+      <h6 style="margin-top: 10px">
+        <strong>Lorem ipsum dolor sit amet.</strong>
+      </h6>
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div>
+          <small>Quantité</small> <br />
+          <strong>50</strong>
+        </div>
+        <div style="width: 60%; text-align: right">
+          <small>Prix Total</small> <br />
+          <strong>50.000 Fcfa</strong>
+        </div>
+      </div>
+      <h5>
+        <strong>-------------------------------------------------</strong>
+      </h5>
+      <div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          "
+        >
+          <div style="width: 50%">
+            <strong>Total TTC</strong>
+          </div>
+          <div style="width: 50%; text-align: right">
+            <strong>55.000 Fcfa</strong>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          "
+        >
+          <div style="width: 50%">
+            <strong>Somme</strong>
+          </div>
+          <div style="width: 60%; text-align: right">
+            <strong>60.000 Fcfa</strong>
+          </div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+          "
+        >
+          <div style="width: 50%">
+            <strong>M. rendus</strong>
+          </div>
+          <div style="width: 60%; text-align: right">
+            <strong>5.000 Fcfa</strong>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 35px; font-style: italic;">
+        <small>Que Dieu vous bénisse...</small>
+      </div>
+    </div>
+  </div>
 </div>

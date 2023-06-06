@@ -1,4 +1,3 @@
-import { NgxPrintModule } from 'ngx-print';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -24,8 +23,7 @@ import { EtatComponent } from './component/etat/etat.component';
     LayoutsModule,
     ReactiveFormsModule,
     SharedModule,
-    DataTablesModule,
-    NgxPrintModule
+    DataTablesModule
   ]
 })
 export class CaissierModule { }
