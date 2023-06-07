@@ -3,7 +3,7 @@
 # services:
 
 #   angular-service:
-#     container_name: esmc_front
+#     container_name: la_capitale_front
 #     build: ./dev
 #     volumes:
 #       - './esmc_front:/usr/src/app'
@@ -13,13 +13,13 @@
 version: "3"
 
 services:
-    # esmcgie-web:
-    web_app:
-      #container_name: esmcgie-web
-      container_name: web_app
+    # la_capitale_front:
+    la_capitale_front:
+      #container_name: la_capitale_web
+      container_name: la_capitale_front
       #hostname: dp-senyo
       # image: esmc-web:v1
-      image: perce26/entrersortie:front
+      image: perce26/entrersortie:la_capitale_front
       #command: tail -F anyt
       ports:
        #- "3000:3000"
