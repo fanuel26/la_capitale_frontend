@@ -28,7 +28,7 @@
           <td>{{ item.prix_client }}</td>
           <td>{{ item.monais_client }}</td>
           <td>
-            <button class="btn btn-primary btn-sm">Detail</button>
+            <button class="btn btn-primary btn-sm" (click)="getDetail(item.id, item)">Detail</button>
           </td>
         </tr>
       </tbody>
@@ -260,176 +260,327 @@
   </div>
 </div>
 
+<!-- Modal -->
 <div
-  id="printDiv"
-  class="print-content"
-  style="
-    width: 80mm;
-    top: 0;
-    left: 0;
-    font-size: 10px !important;
-    position: relative;
-  "
+  class="modal fade"
+  id="detailVente"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
 >
-  <div style="position: absolute; width: 100%; padding-right: 30px !important">
-    <img src="./assets/images/logo1.png" style="width: 100%" alt="" />
-    <div>
-      <h6><strong>{{ formattedDate }}</strong></h6>
-      <h6><strong>Caisse 1</strong></h6>
-    </div>
-    <h5>
-      <strong>-------------------------------------------------</strong>
-    </h5>
-    <div>
-      <h6 style="margin-top: 10px">
-        <strong>Lorem ipsum dolor sit amet.</strong>
-      </h6>
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div>
-          <small>Quantité</small> <br />
-          <strong>50</strong>
-        </div>
-        <div style="width: 60%; text-align: right">
-          <small>Prix Total</small> <br />
-          <strong>50.000 Fcfa</strong>
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              Detail de vente
+            </h5>
+          </div>
+          
+          <div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
         </div>
       </div>
-      <h5>
-        <strong
-          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
-        >
-      </h5>
-    </div>
-    <div>
-      <h6 style="margin-top: 10px">
-        <strong>Lorem ipsum dolor sit amet.</strong>
-      </h6>
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div>
-          <small>Quantité</small> <br />
-          <strong>50</strong>
-        </div>
-        <div style="width: 60%; text-align: right">
-          <small>Prix Total</small> <br />
-          <strong>50.000 Fcfa</strong>
+      <div class="modal-body bg-banner">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card card-body p-4 bg-white border-0 my-4">
+                <h6 class="mb-4">Liste des produits ajouter a la vente</h6>
+                <div class="row">
+                  <div class="col-md-12" *ngFor="let item of dataAddVenteDetail">
+                    <div class="card card-body border-0 brd border-bottom mb-2">
+                      <div
+                        class="mb-3"
+                      >
+                        <h6 class="fw-bold">-- {{ item.libelle }} --</h6>
+                      </div>
+                      <div
+                        class="d-flex justify-content-between align-items-center"
+                      >
+                        <!-- <div>
+                          <small>Prix Unitaire</small>
+                          <h6 class="text-dark">2.200 Fcfa</h6>
+                        </div> -->
+                        <div>
+                          <small>Qté</small>
+                          <h6 class="text-dark">{{ item.qte }}</h6>
+                        </div>
+                        <div>
+                          <small>Prix Total</small>
+                          <h6 class="text-primar fw-bold">
+                            {{ item.prix_total }} Fcfa
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card card-body p-4 bg-white border-0 mb-4">
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>Prix TTC</h6>
+                  <h4 class="fw-bold">{{ prixTotalDetail }} Fcfa</h4>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>Som. Apporter</h6>
+                  <h4 class="fw-bold">{{ dataVenteDetail?.prix_client }} Fcfa</h4>
+                </div>
+                <hr />
+                <div
+                  class="d-flex justify-content-between align-items-center my-3"
+                >
+                  <h6>M. Rendus</h6>
+                  <h4 class="fw-bold text-primar">{{ dataVenteDetail?.monais_client }} Fcfa</h4>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <h5>
-        <strong
-          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
-        >
-      </h5>
-    </div>
-    <div>
-      <h6 style="margin-top: 10px">
-        <strong>Lorem ipsum dolor sit amet.</strong>
-      </h6>
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div>
-          <small>Quantité</small> <br />
-          <strong>50</strong>
-        </div>
-        <div style="width: 60%; text-align: right">
-          <small>Prix Total</small> <br />
-          <strong>50.000 Fcfa</strong>
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Fermer
+        </button>
+        <button type="button" class="btn btn-primary" (click)="printDataRecuDetail()">
+          Imprimer le reçu
+        </button>
       </div>
-      <h5>
-        <strong
-          >- - - - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
-        >
-      </h5>
     </div>
-    <div>
-      <h6 style="margin-top: 10px">
-        <strong>Lorem ipsum dolor sit amet.</strong>
-      </h6>
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        "
-      >
-        <div>
-          <small>Quantité</small> <br />
-          <strong>50</strong>
-        </div>
-        <div style="width: 60%; text-align: right">
-          <small>Prix Total</small> <br />
-          <strong>50.000 Fcfa</strong>
-        </div>
+  </div>
+</div>
+
+<div style="display: none">
+  <div
+    id="printDiv"
+    class="print-content"
+    style="
+      width: 80mm;
+      top: 0;
+      left: 0;
+      font-size: 10px !important;
+      position: relative;
+    "
+  >
+    <div style="position: absolute; width: 100%; padding-right: 30px !important">
+      <img src="./assets/images/logo1.png" style="width: 100%" alt="" />
+      <div>
+        <h6>
+          <strong>{{ formattedDate }}</strong>
+        </h6>
+        <h6><strong>Caisse 1</strong></h6>
+        <h6><strong>Tel: +228 90 49 45 51</strong></h6>
       </div>
       <h5>
         <strong>-------------------------------------------------</strong>
       </h5>
-      <div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-          "
-        >
-          <div style="width: 50%">
-            <strong>Total TTC</strong>
-          </div>
-          <div style="width: 50%; text-align: right">
-            <strong>55.000 Fcfa</strong>
-          </div>
-        </div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-          "
-        >
-          <div style="width: 50%">
-            <strong>Somme</strong>
-          </div>
-          <div style="width: 60%; text-align: right">
-            <strong>60.000 Fcfa</strong>
-          </div>
-        </div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-          "
-        >
-          <div style="width: 50%">
-            <strong>M. rendus</strong>
-          </div>
-          <div style="width: 60%; text-align: right">
-            <strong>5.000 Fcfa</strong>
+      <div style="margin-top: -27px">
+        <div *ngFor="let item of dataAddVente">
+          <h5>
+            <strong
+              >- - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
+            >
+          </h5>
+          <h6 style="margin-top: 10px">
+            <strong>{{ item.libelle }}</strong>
+          </h6>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <small>Quantité</small> <br />
+              <strong>{{ item.qte }}</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <small>Prix Total</small> <br />
+              <strong>{{ item.prix_total }} Fcfa</strong>
+            </div>
           </div>
         </div>
       </div>
-      <div style="text-align: center; margin-top: 35px; font-style: italic;">
-        <small>Que Dieu vous bénisse...</small>
+      <div>
+        <h5>
+          <strong>-------------------------------------------------</strong>
+        </h5>
+        <div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>Total TTC</strong>
+            </div>
+            <div style="width: 50%; text-align: right">
+              <strong>{{ prixTotal }} Fcfa</strong>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>Somme</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <strong>{{ prixAmener }} Fcfa</strong>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>M. rendus</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <strong>{{ prixRemettre }} Fcfa</strong>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 35px; font-style: italic">
+          <small>Que Dieu vous bénisse...</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div
+    id="printDivDetail"
+    class="print-content"
+    style="
+      width: 80mm;
+      top: 0;
+      left: 0;
+      font-size: 10px !important;
+      position: relative;
+    "
+  >
+    <div style="position: absolute; width: 100%; padding-right: 30px !important">
+      <img src="./assets/images/logo1.png" style="width: 100%" alt="" />
+      <div>
+        <h6>
+          <strong>{{ formattedDate }}</strong>
+        </h6>
+        <h6><strong>Caisse 1</strong></h6>
+        <h6><strong>Tel: +228 90 49 45 51</strong></h6>
+      </div>
+      <h5>
+        <strong>-------------------------------------------------</strong>
+      </h5>
+      <div style="margin-top: -27px">
+        <div *ngFor="let item of dataAddVenteDetail">
+          <h5>
+            <strong
+              >- - - - - - - - - - - - - - - - - - - - - - - - - - -</strong
+            >
+          </h5>
+          <h6 style="margin-top: 10px">
+            <strong>{{ item.libelle }}</strong>
+          </h6>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <small>Quantité</small> <br />
+              <strong>{{ item.qte }}</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <small>Prix Total</small> <br />
+              <strong>{{ item.prix_total }} Fcfa</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h5>
+          <strong>-------------------------------------------------</strong>
+        </h5>
+        <div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>Total TTC</strong>
+            </div>
+            <div style="width: 50%; text-align: right">
+              <strong>{{ prixTotalDetail }} Fcfa</strong>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>Somme</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <strong>{{ dataVenteDetail?.prix_client }} Fcfa</strong>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 10px;
+            "
+          >
+            <div style="width: 50%">
+              <strong>M. rendus</strong>
+            </div>
+            <div style="width: 60%; text-align: right">
+              <strong>{{ dataVenteDetail?.monais_client }} Fcfa</strong>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 35px; font-style: italic">
+          <small>Que Dieu vous bénisse...</small>
+        </div>
       </div>
     </div>
   </div>

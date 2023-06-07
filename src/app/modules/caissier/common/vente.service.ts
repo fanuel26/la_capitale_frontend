@@ -16,6 +16,11 @@ export class VenteService {
     return this.httpService.getRequest(`/add/vente/getByIdUser/${id}`)
   }
 
+  
+  listeDetailProduitByIdProduit(id: number) {
+    return this.httpService.getRequest(`/vente/getDetailVenteByIdUser/${id}`)
+  }
+
   saveAddVente(body: any) {
     return this.httpService.postRequest('/add/vente/save', body)
   }

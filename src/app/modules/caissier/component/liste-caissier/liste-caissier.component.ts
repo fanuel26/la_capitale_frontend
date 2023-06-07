@@ -26,6 +26,11 @@ export class ListeCaissierComponent implements OnInit {
   prixRemettre: number = 0;
   formattedDate: any;
 
+  
+  dataAddVenteDetail: any;
+  prixTotalDetail!: number;
+  dataVenteDetail: any;
+
   constructor(
     private produitService: ProduitService,
     private sweetAlertService: SweetAlertService,
@@ -39,6 +44,7 @@ export class ListeCaissierComponent implements OnInit {
     this.formattedDate = date.toLocaleDateString(locale, { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' });
 
     this.user = JSON.parse(localStorage.getItem('infoUser')!);
+
     this.listeProduit();
     this.listeVente(this.user.id);
     this.listeAddVente(this.user.id);
@@ -203,15 +209,13 @@ export class ListeCaissierComponent implements OnInit {
       @page {
         size: 80mm 80mm;
         margin: 0 !important;
-        font-family: 'Times New Roman', Times, serif;
-        font-size: 10px
+        font-size: 8px
       }
       @media print {
         #printDiv {
           width: 80mm;
           height: 80mm;
-          font-family: 'Times New Roman', Times, serif;
-          font-size: 10px
+          font-size: 8px
         }
       }
     `;
@@ -224,33 +228,78 @@ export class ListeCaissierComponent implements OnInit {
     });
   }
 
+  printDataRecuDetail() {
+    const printCSS = `
+      @page {
+        size: 80mm 80mm;
+        margin: 0 !important;
+        font-size: 8px
+      }
+      @media print {
+        #printDiv {
+          width: 80mm;
+          height: 80mm;
+          font-size: 8px
+        }
+      }
+    `;
+
+    printJS({
+      printable: 'printDivDetail', // Corrected id to match the div id
+      type: 'html',
+      targetStyles: ['*'],
+      style: printCSS
+    });
+  }
+
   saveVente() {
-    this.printDataRecu();
-    // if (this.prixAmener >= this.prixTotal) {
-    //   let body = {
-    //     id_user: this.user.id,
-    //     prix_total: this.prixTotal,
-    //     prix_client: this.prixAmener,
-    //     monais_client: this.prixRemettre,
-    //   };
-    //   this.venteService.saveVente(body).subscribe((value) => {
-    //     console.log(value);
-    //     if (value.status == true) {
-    //       this.sweetAlertService.showSuccessAlert(
-    //         'Vente effectuer!',
-    //         'Vente effectuée avec success'
-    //       );
-    //       this.ngOnInit();
-    //       this.prixAmener = 0
-    //       this.prixRemettre = 0
-    //       this.produitSelect = null
-    //       $('#recherche').focus()
-    //       $('#qte').val(null)
-    //       $('#sommeApporter').val(null)
-    //     }
-    //   });
-    // } else {
-    //   this.sweetAlertService.showErrorAlert('Erreur de vente', 'Montant amener est inferieur au prix total des produit')
-    // }
+    // this.printDataRecu();
+    if (this.prixAmener >= this.prixTotal) {
+      let body = {
+        id_user: this.user.id,
+        prix_total: this.prixTotal,
+        prix_client: this.prixAmener,
+        monais_client: this.prixRemettre,
+      };
+      this.venteService.saveVente(body).subscribe((value) => {
+        console.log(value);
+        if (value.status == true) {
+          this.printDataRecu();
+          this.sweetAlertService.showSuccessAlert(
+            'Vente effectuer!',
+            'Vente effectuée avec success'
+          );
+          this.ngOnInit();
+          this.prixAmener = 0
+          this.prixRemettre = 0
+          this.produitSelect = null
+          $('#recherche').focus()
+          $('#qte').val(null)
+          $('#sommeApporter').val(null)
+        }
+      });
+    } else {
+      this.sweetAlertService.showErrorAlert('Erreur de vente', 'Montant amener est inferieur au prix total des produit')
+    }
+  }
+
+  listeAddVenteDetail(id: number) {
+    this.venteService.listeDetailProduitByIdProduit(id).subscribe((value) => {
+      if (value.status == true) {
+        this.dataAddVenteDetail = value.data;
+
+        this.prixTotalDetail = 0;
+        for (let i = 0; i < this.dataAddVenteDetail.length; i++) {
+          this.prixTotalDetail += this.dataAddVenteDetail[i].prix_total;
+        }
+      }
+    });
+  }
+
+  getDetail(id: number, data: any) {
+    console.log(id)
+    $('#detailVente').modal('show')
+    this.dataVenteDetail = data
+    this.listeAddVenteDetail(id)
   }
 }
