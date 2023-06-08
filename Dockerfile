@@ -7,7 +7,7 @@
 
 # # stage 2
 # FROM nginx:alpine
-# COPY --from=node /app/dist/esmc /usr/share/nginx/html
+# COPY --from=node /app/dist/la_capitale_front /usr/share/nginx/html
 
 # Bikor dorkerfile
 
@@ -37,7 +37,7 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY src/app/conf/default.conf /etc/nginx/conf.d/
 
-COPY --from=builder /app/dist/esmc /usr/share/nginx/html
+COPY --from=builder /app/dist/la_capitale_front /usr/share/nginx/html
 
 # COPY --from=builder /app-osr/scripts/replace_api_url.sh /
 
