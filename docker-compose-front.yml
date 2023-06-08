@@ -20,7 +20,8 @@ services:
       #hostname: dp-senyo
       # image: esmc-web:v1
       image: perce26/entrersortie:la_capitale_front
-      #command: tail -F anyt
+      restart: always
+      #command: tail -F anyts
       ports:
        #- "3000:3000"
        - "4500:80"
