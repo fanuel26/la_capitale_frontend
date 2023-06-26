@@ -25,6 +25,10 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
   lotProduit: any = [];
   stateProduit: any;
   nbrStock: number = 0;
+  nomProduit!: string;
+
+  toUpdate: boolean = false
+  dataToUpdate: any;
 
   venteForm!: FormGroup;
   lotForm!: FormGroup;
@@ -167,5 +171,56 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
     console.log(this.activeTigger);
     this.dtTrigger.next('');
     this.activeTigger = true;
+  }
+
+  getValueName(e: any) {
+    if (e.target.value) {
+      this.nomProduit = e.target.value
+    }
+  }
+
+  selectToUpdate(data: any) {
+    this.toUpdate = true
+    this.dataToUpdate = data
+    this.lotForm.patchValue({
+      qte: this.dataToUpdate.qte,
+      prix_achat: this.dataToUpdate.prix_achat
+    })
+  }
+
+  updatName() {
+    if (this.nomProduit != '') {
+      let body = {
+        libelle: this.nomProduit
+      }
+      this.produitService.updateProduit(this.detailProduit.id, body).subscribe(value => {
+        console.log(value)
+        if (value.status == true) {
+          this.sweetAlert.showSuccessAlert('Success', 'Modification effectuer avec sucess')
+          this.getDetailProduit(this.id);
+        }
+      })
+    }else {
+      this.sweetAlert.showErrorAlert('Danger', 'Nom du produit incorrecte!!!')
+    }
+  }
+
+  updatLotProduit() {
+    console.log(this.dataToUpdate.id)
+    console.log(this.lotForm.get('qte')?.value)
+    console.log(this.lotForm.get('prix_achat')?.value)
+    let body = {
+      qte: this.lotForm.get('qte')?.value,
+      prix_achat: this.lotForm.get('prix_achat')?.value
+    }
+    this.produitService.updateLotProduit(this.dataToUpdate.id, body).subscribe(value => {
+      console.log(value)
+      if (value.status == true) {
+        this.sweetAlert.showSuccessAlert('Success', 'Modification effectuer avec sucess')
+        this.getDetailProduit(this.id);
+        this.lotForm.reset()
+        this.toUpdate = false
+      }
+    })
   }
 }

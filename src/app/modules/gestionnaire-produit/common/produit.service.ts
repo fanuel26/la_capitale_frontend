@@ -12,6 +12,10 @@ export class ProduitService {
     return this.httpService.getRequest('/produit/list');
   }
 
+  updateProduit(id: number, body: any) {
+    return this.httpService.putRequest(`/produit/update/${id}`, body);
+  }
+
   saveProduit(body: any) {
     return this.httpService.postRequest('/produit/save', body);
   }
@@ -38,6 +42,10 @@ export class ProduitService {
 
   saveLotProduit(body: any) {
     return this.httpService.postRequest(`/produit/lot/save`, body)
+  }
+
+  updateLotProduit(id: number, body: any) {
+    return this.httpService.putRequest(`/produit/lot/update/${id}`, body)
   }
 
   getStatProduit(id: number) {

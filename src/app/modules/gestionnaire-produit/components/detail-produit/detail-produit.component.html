@@ -13,9 +13,8 @@
                 {{
                   prixVente == null
                     ? "Pas Definis"
-                    : prixVente.prix_vente_unique + ' Fcfa'
+                    : prixVente.prix_vente_unique + " Fcfa"
                 }}
-
               </h4>
             </div>
           </div>
@@ -67,44 +66,80 @@
       </div>
     </div>
     <div class="col-md-4 mt-4">
-      <h6 class="fw-bold">Faire une mise en stock</h6>
-      <div class="card card-body p-4 bg-white border-0 mb-4">
-        <form [formGroup]="lotForm" (ngSubmit)="onSubmitLot()">
-          <div class="form-group my-3">
-            <label for="">Quantité</label>
-            <input
-              type="number"
-              class="form-control form-control-lg input1"
-              placeholder="Quantité"
-              formControlName="qte"
-              [ngClass]="
-                lotForm.get('qte')?.invalid && lotForm.get('qte')?.touched
-                  ? 'form-control is-invalid'
-                  : 'form-control'
-              "
-            />
-          </div>
-          <div class="form-group my-3">
-            <label for="">Prix achat stock</label>
-            <input
-              type="number"
-              class="form-control form-control-lg input1"
-              placeholder="Prix d'achat"
-              formControlName="prix_achat"
-              [ngClass]="
-                lotForm.get('prix_achat')?.invalid &&
-                lotForm.get('prix_achat')?.touched
-                  ? 'form-control is-invalid'
-                  : 'form-control'
-              "
-            />
-          </div>
-          <div class="form-group my-3 text-right">
-            <button type="submit" class="btn btn-primary">
-              Ajouter en stock
-            </button>
-          </div>
-        </form>
+      <div>
+        <h6 class="fw-bold">Faire une mise en stock</h6>
+        <div class="card card-body p-4 bg-white border-0 mb-4">
+          <form [formGroup]="lotForm" (ngSubmit)="onSubmitLot()">
+            <div class="form-group my-3">
+              <label for="">Quantité</label>
+              <input
+                type="number"
+                class="form-control form-control-lg input1"
+                placeholder="Quantité"
+                formControlName="qte"
+                [ngClass]="
+                  lotForm.get('qte')?.invalid && lotForm.get('qte')?.touched
+                    ? 'form-control is-invalid'
+                    : 'form-control'
+                "
+              />
+            </div>
+            <div class="form-group my-3">
+              <label for="">Prix achat stock</label>
+              <input
+                type="number"
+                class="form-control form-control-lg input1"
+                placeholder="Prix d'achat"
+                formControlName="prix_achat"
+                [ngClass]="
+                  lotForm.get('prix_achat')?.invalid &&
+                  lotForm.get('prix_achat')?.touched
+                    ? 'form-control is-invalid'
+                    : 'form-control'
+                "
+              />
+            </div>
+            <div class="form-group my-3 text-right">
+              <button type="submit" class="btn btn-primary" *ngIf="toUpdate == false">
+                Ajouter en stock
+              </button>
+              <button
+              *ngIf="toUpdate == true"
+                type="button"
+                class="btn btn-success"
+                (click)="updatLotProduit()"
+              >
+                Modifier
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div>
+        <h6 class="fw-bold">Modifier le nom</h6>
+        <div class="card card-body p-4 bg-white border-0 mb-4">
+          <form>
+            <div class="form-group my-3">
+              <label for="">Nom du produit</label>
+              <input
+                type="text"
+                class="form-control form-control-lg input1"
+                placeholder="Nom du produit"
+                [value]="detailProduit?.libelle"
+                (input)="getValueName($event)"
+              />
+            </div>
+            <div class="form-group my-3 text-right">
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="updatName()"
+              >
+                Modifier
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <div class="col-md-8 mt-4">
@@ -126,12 +161,13 @@
             </div>
           </div>
         </div>
-        <table class="table table-hover table-striped" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+        <table class="table table-hover table-striped">
           <thead>
             <tr>
               <th>Date d'ajout</th>
               <th>Quantitié</th>
               <th>Prix d'achat (Fcfa)</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -141,6 +177,14 @@
               </td>
               <td>{{ item.qte }}</td>
               <td>{{ item.prix_achat }}</td>
+              <td>
+                <button
+                  class="btn btn-sm btn-success"
+                  (click)="selectToUpdate(item)"
+                >
+                  Modifier
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
