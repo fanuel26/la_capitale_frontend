@@ -1,1 +1,6 @@
 /*# sourceMappingURL=produit.component.css.map */
+
+.scroll-table {
+  height: 350px;
+  overflow-y: scroll;
+}

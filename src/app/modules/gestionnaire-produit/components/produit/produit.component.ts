@@ -13,8 +13,10 @@ declare var $:any;
 })
 export class ProduitComponent implements OnInit {
   dataProduit: any;
+  dataProduit_s: any;
   produitForm!: FormGroup
   idProduit!: number
+  value!: string;
   constructor(private produitService: ProduitService, private sweetAlert: SweetAlertService) {}
 
   ngOnInit(): void {
@@ -31,8 +33,25 @@ export class ProduitComponent implements OnInit {
       console.log(__values);
       if (__values.status == true) {
         this.dataProduit = __values.data
+        this.dataProduit_s = __values.data
       }
     });
+  }
+
+  searchProduit(e: any) {
+    let val = e.target.value
+    console.log(val)
+    this.value = val.toLowerCase();
+
+    let data = this.dataProduit_s;
+
+    this.dataProduit = [];
+    for (let i = 0; i < data.length; i++) {
+      let libelle = data[i].libelle.toLowerCase().indexOf(this.value);
+      if (libelle > -1) {
+        this.dataProduit.push(data[i]);
+      }
+    }
   }
 
   onSubmit() {

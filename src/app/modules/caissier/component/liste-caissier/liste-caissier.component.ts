@@ -15,6 +15,7 @@ declare var $: any;
 })
 export class ListeCaissierComponent implements OnInit {
   dataProduit: any;
+  dataProduit_s: any;
   dataAddVente: any;
   dataVente: any;
   dataSearch: any;
@@ -25,8 +26,11 @@ export class ListeCaissierComponent implements OnInit {
   prixAmener!: number;
   prixRemettre: number = 0;
   formattedDate: any;
+  value!: string;
 
-  
+  load!: boolean;
+
+
   dataAddVenteDetail: any;
   prixTotalDetail!: number;
   dataVenteDetail: any;
@@ -59,9 +63,13 @@ export class ListeCaissierComponent implements OnInit {
   }
 
   launchModalVente() {
+    this.load = false
     setTimeout(() => {
-      $('#recherche').focus();
-    }, 1000);
+      this.load = true
+      setTimeout(() => {
+        $('#recherche').focus();
+      }, 1000);
+    }, 4000);
   }
 
   deleteAddVente(id: number) {
@@ -96,6 +104,7 @@ export class ListeCaissierComponent implements OnInit {
       console.log(value);
       if (value.status == true) {
         this.dataProduit = value.data;
+        this.dataProduit_s = value.data;
         for (let i = 0; i < this.dataProduit.length; i++) {
           this.getDetailProduit(this.dataProduit[i].id, i);
           if (i == this.dataProduit.length - 1) {
@@ -126,16 +135,29 @@ export class ListeCaissierComponent implements OnInit {
   }
 
   launchSearch(e: any) {
-    console.log(e.target.value);
-    let sh = e.target.value.toLowerCase();
-    this.dataProduit = this.dataSearch.filter((value: any) => {
-      let val = value.libelle.toLowerCase();
-      console.log(val.includes(sh));
-      if (val.includes(sh) == true && value.prixVente) {
-        return value;
+    // console.log(e.target.value);
+    // let sh = e.target.value.toLowerCase();
+    // this.dataProduit = this.dataSearch.filter((value: any) => {
+    //   let val = value.libelle.toLowerCase();
+    //   console.log(val.includes(sh));
+    //   if (val.includes(sh) == true && value.prixVente) {
+    //     return value;
+    //   }
+    // });
+    // console.log(this.dataProduit);
+    let val = e.target.value
+    console.log(val)
+    this.value = val.toLowerCase();
+
+    let data = this.dataProduit_s;
+
+    this.dataProduit = [];
+    for (let i = 0; i < data.length; i++) {
+      let libelle = data[i].libelle.toLowerCase().indexOf(this.value);
+      if (libelle > -1) {
+        this.dataProduit.push(data[i]);
       }
-    });
-    console.log(this.dataProduit);
+    }
   }
 
   AddToSell(item: any) {

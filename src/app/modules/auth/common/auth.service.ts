@@ -29,11 +29,10 @@ export class AuthService {
           localStorage.setItem("infoUser", JSON.stringify(infoUser));
           if (token) {
             localStorage.setItem("isAuthenticate", "1");
+            localStorage.setItem("typeCompte", infoUser.role);
             if (infoUser.role == 1) {
-              localStorage.setItem("typeCompte", infoUser.role);
               this.route.navigate(["/caissier"]);
             }else {
-              localStorage.setItem("typeCompte", infoUser.role);
               this.route.navigate(["/gestionnaire"]);
             }
           }
