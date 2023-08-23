@@ -39,7 +39,7 @@ export class ListeCaissierComponent implements OnInit {
     private produitService: ProduitService,
     private sweetAlertService: SweetAlertService,
     private venteService: VenteService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const date = new Date(); // Replace with your actual date
@@ -105,14 +105,8 @@ export class ListeCaissierComponent implements OnInit {
       if (value.status == true) {
         this.dataProduit = value.data;
         this.dataProduit_s = value.data;
-        for (let i = 0; i < this.dataProduit.length; i++) {
-          this.getDetailProduit(this.dataProduit[i].id, i);
-          if (i == this.dataProduit.length - 1) {
-            setTimeout(() => {
-              this.dataSearch = this.dataProduit;
-            }, 1500);
-          }
-        }
+        this.dataSearch = this.dataProduit;
+        this.getDetailProduit(this.dataProduit[0].id, 0);
       }
     });
   }
@@ -174,14 +168,13 @@ export class ListeCaissierComponent implements OnInit {
   }
 
   getDetailProduit(id: number, i: number) {
-    this.produitService.getPrixVenteProduit(id).subscribe((value) => {
-      console.log(value);
-      if (value.status == true) {
-        let prixVente = value.data;
-        this.dataProduit[i].prixVente = prixVente?.prix_vente_unique;
-      }
-    });
-
+    // this.produitService.getPrixVenteProduit(id).subscribe((value) => {
+    //   console.log(value);
+    //   if (value.status == true) {
+    //     let prixVente = value.data;
+    //     this.dataProduit[i].prixVente = prixVente?.prix_vente_unique;
+    //   }
+    // });
     this.produitService.getStatProduit(id).subscribe((value) => {
       if (value.status == true) {
         console.log('Verification vente');
@@ -195,6 +188,11 @@ export class ListeCaissierComponent implements OnInit {
         this.dataProduit[i].nbrStock = nbrStock;
 
         console.log(this.dataProduit);
+        if (i == this.dataProduit.length - 1) {
+          this.dataSearch = this.dataProduit;
+        }else {
+          this.getDetailProduit(this.dataProduit[i + 1].id, i + 1);
+        }
       }
     });
   }
@@ -207,7 +205,7 @@ export class ListeCaissierComponent implements OnInit {
         id_produit: this.produitSelect.id,
         id_user: user.id,
         qte: this.qte,
-        prix_total: this.produitSelect.prixVente * this.qte,
+        prix_total: this.produitSelect.prix_vente_unique * this.qte,
       };
       this.venteService.saveAddVente(body).subscribe((value) => {
         if (value.status == true) {

@@ -114,14 +114,14 @@
                   <div class="col-md-12" *ngFor="let item of dataProduit">
                     <div
                       class="card card-body brd border-bottom border-0 mb-2"
-                      *ngIf="item.prixVente"
+                      *ngIf="item.prix_vente_unique"
                       (click)="AddToSell(item)"
                     >
                       <h6>{{ item.libelle }}</h6>
                       <div
                         class="d-flex justify-content-between align-items-center"
                       >
-                        <h5 class="text-primar">{{ item.prixVente }} Fcfa</h5>
+                        <h5 class="text-primar">{{ item.prix_vente_unique }} Fcfa</h5>
                         <h6>
                           <small>{{ item.nbrStock }} Restant</small>
                         </h6>
@@ -142,7 +142,7 @@
                         class="d-flex justify-content-between align-items-center"
                       >
                         <h5 class="text-primar">
-                          {{ produitSelect?.prixVente }} Fcfa
+                          {{ produitSelect?.prix_vente_unique }} Fcfa
                         </h5>
                         <h6>
                           <input

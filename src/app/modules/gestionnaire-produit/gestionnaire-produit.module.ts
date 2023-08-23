@@ -9,13 +9,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DetailProduitComponent } from './components/detail-produit/detail-produit.component';
 import { DataTablesModule } from 'angular-datatables';
+import { StatistiqueComponent } from './components/statistique/statistique.component';
 
 
 @NgModule({
   declarations: [
     ProduitComponent,
     GestionnaireProduitComponent,
-    DetailProduitComponent
+    DetailProduitComponent,
+    StatistiqueComponent
   ],
   imports: [
     CommonModule,
