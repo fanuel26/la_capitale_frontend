@@ -19,7 +19,10 @@ services:
       container_name: la_capitale_front
       #hostname: dp-senyo
       # image: esmc-web:v1
-      image: perce26/entrersortie:la_capitale_front
+      # image: perce26/entrersortie:la_capitale_front
+      build:
+        context: .
+        dockerfile: Dockerfile
       restart: always
       #command: tail -F anyts
       ports:
