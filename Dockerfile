@@ -26,14 +26,14 @@ COPY . .
 
 RUN npm install --force
 
-RUN npm run start --port 80
+RUN npm run start
 
 # RUN npm run build -- --configuration="production"
 
 # Stage 2
 # FROM nginx:1.21.6-alpine
 
-EXPOSE 80
+EXPOSE 4500
 
 # RUN rm -rf /usr/share/nginx/html/*
 
