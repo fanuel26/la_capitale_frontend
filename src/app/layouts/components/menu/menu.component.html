@@ -29,11 +29,115 @@
       <h5 class="fw-bold text-center">Alert Stock</h5>
     </div>
   </div>
-  <!-- <div class="col-md-12 my-3">
-    <a href="/gestionnaire/statistique" class="a">
-      <div class="card cardy border-0 p-4">
-        <h5 class="fw-bold text-center">Statistique</h5>
-      </div>
+  <div class="col-md-12 my-3">
+    <a class="card cardy border-0 p-4 a" href="#" data-bs-toggle="modal" data-bs-target="#statistique" style="cursor: pointer;">
+      <h5 class="fw-bold text-center">Statistique</h5>
     </a>
-  </div> -->
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="statistique" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="statistiqueLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div>
+            <h5 class="modal-title" id="statistiqueLabel">
+              Statistique globale
+            </h5>
+          </div>
+          <div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row my-4">
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Nombre de produit globale</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.nbrProduit ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Nombre de vente globale</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.nbrVente ?? 0  }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Nontant vente globale</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.montantVente ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Quantité total stock</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.qteEntrerStock ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Prix d'achat total</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.prixAchatStock ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Montant vente du jour</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.montantVenteJour ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Quantité en stock jour</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.qteEntrerStockJour ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Montant achat du jour</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.prixAchatStockJour ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Nombre de produit du jour</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.produitJour ?? 0 }}
+              </h4>
+            </div>
+          </div>
+          <div class="col-md-3 my-3">
+            <div class="card p-2">
+              <p>Nombre de produit du jour</p>
+              <h4 class="text-primar fw-bold">
+                {{ stats.venteJour ?? 0 }}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
