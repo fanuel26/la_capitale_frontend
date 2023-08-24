@@ -26,18 +26,20 @@ COPY . .
 
 RUN npm install --force
 
-RUN npm run build -- --configuration="production"
+RUN npm run start --port 80
+
+# RUN npm run build -- --configuration="production"
 
 # Stage 2
-FROM nginx:1.21.6-alpine
+# FROM nginx:1.21.6-alpine
 
 EXPOSE 80
 
-RUN rm -rf /usr/share/nginx/html/*
+# RUN rm -rf /usr/share/nginx/html/*
 
-COPY src/app/conf/default.conf /etc/nginx/conf.d/
+# COPY src/app/conf/default.conf /etc/nginx/conf.d/
 
-COPY --from=builder /app/dist/la_capitale_front /usr/share/nginx/html
+# COPY --from=builder /app/dist/la_capitale_front /usr/share/nginx/html
 
 # COPY --from=builder /app-osr/scripts/replace_api_url.sh /
 
