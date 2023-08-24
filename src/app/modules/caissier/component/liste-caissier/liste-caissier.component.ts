@@ -103,8 +103,8 @@ export class ListeCaissierComponent implements OnInit {
     this.produitService.listeProduit().subscribe((value) => {
       console.log(value);
       if (value.status == true) {
-        this.dataProduit = value.dataSecond;
-        this.dataProduit_s = value.dataSecond;
+        this.dataProduit = value.data_second;
+        this.dataProduit_s = value.data_second;
         this.dataSearch = this.dataProduit;
         this.getDetailProduit(this.dataProduit[0].id, 0);
       }
