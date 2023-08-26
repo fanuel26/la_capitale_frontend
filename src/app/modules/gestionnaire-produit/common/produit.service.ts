@@ -12,7 +12,6 @@ export class ProduitService {
     return this.httpService.getRequest('/produit/list');
   }
 
-
   statistique() {
     return this.httpService.getRequest('/produit/statistique');
   }

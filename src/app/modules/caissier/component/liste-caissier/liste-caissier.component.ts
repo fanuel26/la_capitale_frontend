@@ -30,6 +30,8 @@ export class ListeCaissierComponent implements OnInit {
 
   load!: boolean;
 
+  stats: any;
+
 
   dataAddVenteDetail: any;
   prixTotalDetail!: number;
@@ -50,6 +52,7 @@ export class ListeCaissierComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('infoUser')!);
 
     this.listeProduit();
+    this.getStatistique()
     this.listeVente(this.user.id);
     this.listeAddVente(this.user.id);
   }
@@ -99,6 +102,17 @@ export class ListeCaissierComponent implements OnInit {
     this.prixRemettre = this.prixAmener - this.prixTotal;
   }
 
+
+  getStatistique() {
+    this.produitService.statistique().subscribe(value => {
+      console.log(value)
+      if (value.status == true) {
+        this.stats = value.data
+        console.log(this.stats)
+      }
+    })
+  }
+
   listeProduit() {
     this.produitService.listeProduit().subscribe((value) => {
       console.log(value);
@@ -106,7 +120,8 @@ export class ListeCaissierComponent implements OnInit {
         this.dataProduit = value.data_second;
         this.dataProduit_s = value.data_second;
         this.dataSearch = this.dataProduit;
-        this.getDetailProduit(this.dataProduit[0].id, 0);
+        this.dataSearch = this.dataProduit;
+        // this.getDetailProduit(this.dataProduit[0].id, 0);
       }
     });
   }
@@ -155,7 +170,7 @@ export class ListeCaissierComponent implements OnInit {
   }
 
   AddToSell(item: any) {
-    if (item.nbrStock > 0) {
+    if (item.stock > 0) {
       this.produitSelect = item;
       $('#qte').focus();
       $('#qte').val(null);
@@ -186,6 +201,14 @@ export class ListeCaissierComponent implements OnInit {
           parseInt(stateProduit.nbrQteVente ?? 0);
 
         this.dataProduit[i].nbrStock = nbrStock;
+
+        let data = {
+          'stock': nbrStock
+        }
+
+        this.produitService.updateProduit(this.dataProduit[i].id, data).subscribe(value => {
+          console.log(value)
+        })
 
         console.log(this.dataProduit);
         if (i == this.dataProduit.length - 1) {

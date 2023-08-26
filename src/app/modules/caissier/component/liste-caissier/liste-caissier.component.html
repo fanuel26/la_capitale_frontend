@@ -10,6 +10,24 @@
       Effectuer une vente
     </button>
   </div>
+  <div class="row my-4">
+    <div class="col-md-4">
+      <div class="card p-2">
+        <p>Nombre de vente du jour</p>
+        <h4 class="text-primar fw-bold">
+          {{ stats?.venteJour ?? 0 }}
+        </h4>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card p-2">
+        <p>Montant vendus du jour</p>
+        <h4 class="text-primar fw-bold">
+          {{ stats?.montantVenteJour ?? 0 }} Fcfa
+        </h4>
+      </div>
+    </div>
+  </div>
   <div class="my-4" style="height: 400px; overflow-y: scroll">
     <table class="table table-hover table-striped">
       <thead>
@@ -123,7 +141,7 @@
                       >
                         <h5 class="text-primar">{{ item.prix_vente_unique }} Fcfa</h5>
                         <h6>
-                          <small>{{ item.nbrStock }} Restant</small>
+                          <small>{{ item.stock }} Restant</small>
                         </h6>
                       </div>
                     </div>
