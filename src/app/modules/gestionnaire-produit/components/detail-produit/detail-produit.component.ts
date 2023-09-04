@@ -211,7 +211,6 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
 
   updatLotProduit() {
     if (this.lotForm.get('qte')?.value > 0) {
-      alert(this.lotForm.get('qte')?.value - this.dataToUpdate.qte)
       if ((this.lotForm.get('qte')?.value - this.dataToUpdate.qte) >= this.detailProduit.stock) {
         console.log(this.dataToUpdate.id)
         console.log(this.lotForm.get('qte')?.value)
