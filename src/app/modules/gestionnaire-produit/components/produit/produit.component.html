@@ -38,6 +38,7 @@
           <tr>
             <th>Date de vente</th>
             <th>Nom du produit</th>
+            <th>Stock</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -45,6 +46,7 @@
           <tr *ngFor="let item of dataProduit">
             <td>{{ item.created_at | date : "EEEE, MMMM d, y, h:mm:ss a" }}</td>
             <td>{{ item.libelle }}</td>
+            <td>{{ item.stock }}</td>
             <td>
               <button class="btn btn-primary btn-sm" (click)="getDetail(item.id)">
                 Detail

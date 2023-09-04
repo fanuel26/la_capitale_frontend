@@ -46,7 +46,7 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private produitService: ProduitService,
     private sweetAlert: SweetAlertService
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     // changes.prop contains the old and the new value...
@@ -72,23 +72,27 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmitLot() {
-    let body = {
-      id_produit: this.id,
-      qte: this.lotForm.get('qte')?.value,
-      prix_achat: this.lotForm.get('prix_achat')?.value,
-    };
+    if (this.lotForm.get('qte')?.value > 0) {
+      let body = {
+        id_produit: this.id,
+        qte: this.lotForm.get('qte')?.value,
+        prix_achat: this.lotForm.get('prix_achat')?.value,
+      };
 
-    console.log(body);
-    this.produitService.saveLotProduit(body).subscribe((value) => {
-      if (value.status == true) {
-        this.getDetailProduit(this.id);
-        this.lotForm.reset();
-        this.sweetAlert.showSuccessAlert(
-          'Opération effectuer!',
-          'Mise en stock effectuer avec avec success'
-        );
-      }
-    });
+      console.log(body);
+      this.produitService.saveLotProduit(body).subscribe((value) => {
+        if (value.status == true) {
+          this.getDetailProduit(this.id);
+          this.lotForm.reset();
+          this.sweetAlert.showSuccessAlert(
+            'Opération effectuer!',
+            'Mise en stock effectuer avec avec success'
+          );
+        }
+      });
+    } else {
+      this.sweetAlert.showErrorAlert('Error', 'Quantité saisis incorrect (qté > 0)')
+    }
   }
 
   onSubmitVente() {
@@ -200,27 +204,38 @@ export class DetailProduitComponent implements OnInit, OnChanges, OnDestroy {
           this.getDetailProduit(this.id);
         }
       })
-    }else {
+    } else {
       this.sweetAlert.showErrorAlert('Danger', 'Nom du produit incorrecte!!!')
     }
   }
 
   updatLotProduit() {
-    console.log(this.dataToUpdate.id)
-    console.log(this.lotForm.get('qte')?.value)
-    console.log(this.lotForm.get('prix_achat')?.value)
-    let body = {
-      qte: this.lotForm.get('qte')?.value,
-      prix_achat: this.lotForm.get('prix_achat')?.value
-    }
-    this.produitService.updateLotProduit(this.dataToUpdate.id, body).subscribe(value => {
-      console.log(value)
-      if (value.status == true) {
-        this.sweetAlert.showSuccessAlert('Success', 'Modification effectuer avec sucess')
-        this.getDetailProduit(this.id);
-        this.lotForm.reset()
-        this.toUpdate = false
+    if (this.lotForm.get('qte')?.value > 0) {
+      alert(this.lotForm.get('qte')?.value - this.dataToUpdate.qte)
+      if ((this.lotForm.get('qte')?.value - this.dataToUpdate.qte) >= this.detailProduit.stock) {
+        console.log(this.dataToUpdate.id)
+        console.log(this.lotForm.get('qte')?.value)
+        console.log(this.lotForm.get('prix_achat')?.value)
+        let body = {
+          qte: this.lotForm.get('qte')?.value,
+          prix_achat: this.lotForm.get('prix_achat')?.value,
+          diff: this.lotForm.get('qte')?.value - this.dataToUpdate.qte,
+          id_produit: this.detailProduit.id
+        }
+        this.produitService.updateLotProduit(this.dataToUpdate.id, body).subscribe(value => {
+          console.log(value)
+          if (value.status == true) {
+            this.sweetAlert.showSuccessAlert('Success', 'Modification effectuer avec sucess')
+            this.getDetailProduit(this.id);
+            this.lotForm.reset()
+            this.toUpdate = false
+          }
+        })
+      }else {
+        this.sweetAlert.showErrorAlert('Error', 'Quantité saisis incorrect La quantité est trop inferieur au stock')
       }
-    })
+    } else {
+      this.sweetAlert.showErrorAlert('Error', 'Quantité saisis incorrect (qté > 0)')
+    }
   }
 }

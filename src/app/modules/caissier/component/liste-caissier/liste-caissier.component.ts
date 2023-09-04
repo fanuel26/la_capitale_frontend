@@ -172,6 +172,7 @@ export class ListeCaissierComponent implements OnInit {
   AddToSell(item: any) {
     if (item.stock > 0) {
       this.produitSelect = item;
+      console.log(this.produitSelect)
       $('#qte').focus();
       $('#qte').val(null);
     } else {

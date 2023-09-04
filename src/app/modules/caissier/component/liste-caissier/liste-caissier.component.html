@@ -183,7 +183,7 @@
                       <button
                         type="submit"
                         (click)="onSubmitAddProduit()"
-                        [disabled]="qte == null"
+                        [disabled]="qte == null ||  qte > produitSelect?.stock"
                         class="btn btn-primary"
                       >
                         Ajouter
